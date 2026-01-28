@@ -55,4 +55,5 @@ f2=freq[modal_class+1] if modal_class<n-1 else 0
 
 mode = l_m+(((f0-f1)/(2*f0-f1-f2))*h)
 
+
 print("Mode: ",mode)
