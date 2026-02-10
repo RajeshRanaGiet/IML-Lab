@@ -1,39 +1,37 @@
-#import statistics
-x=[]
-y=[]
-avg_x=0
-avg_y=0
+try:
+  raw_x = input("Enter x values separated by space: ")
+  raw_y = input("Enter y values separated by space: ")
 
-n=int(input("enter number of elements: "))
+  x = [float(i) for i in raw_x.split()]
+  y = [float(i) for i in raw_y.split()]
 
-#Taking input
-for i in range (n):
-    x.append(float(input("Enter the value of x: ")))
-    y.append(float(input("Enter the value of y: ")))
+  n = len(x)
 
-#finding Avrage
-for i in range(n):
-    avg_x+=x[i]
-    avg_y+=y[i]
+  if n != len(y):
+    print("Error: The number of X and Y values must be the same.")
+  elif n < 2:
+    print("Error: You need at least two points to form a line.")
+  else:
+    sum_x = sum(x)
+    sum_y = sum(y)
+    sum_xy = sum([x[i] * y[i] for i in range(n)])
+    sum_x_sq = sum([x[i] ** 2 for i in range(n)])
 
-'''Alternative method to find the avrage 
-   avg_x=statistics.mean(x)
-   avg_y=statistics.mean(y)
-'''
+    numerator_m = (n * sum_xy) - (sum_x * sum_y)
+    denominator_m = (n * sum_x_sq) - (sum_x ** 2)
 
-#finding numerator and denom of m
-num=0
-denom=0
-for i in range (n):
-    num+=((x[i]-avg_x)*(y[i]-avg_y))
-    denom+=((x[i]-avg_x)**2)
+    if denominator_m == 0:
+      print("Error: Vertical line detected (denominator is zero).")
+    else:
+      m = numerator_m / denominator_m
 
-#finding equation
-m=num/denom
-c=avg_y-m*avg_x
-print(f"Equation is : Y ={m}*X + {c}")
+      c = (sum_y - (m * sum_x)) / n
 
-a=float(input("enter value of X to find Y: "))
-b=(m*a)+c
-print("Y = ",b)
+      print("\n" + "-"*30)
+      print(f"Slope (m):     {m:.4f}")
+      print(f"Intercept (c): {c:.4f}")
+      print(f"Equation:      y = {m:.4f}x + {c:.4f}")
+      print("-"*30)
 
+except ValueError:
+    print("Error: Please enter only numbers separated by spaces.")
